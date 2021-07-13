@@ -1,17 +1,20 @@
 #Import libraries
 import numpy as np
 import pandas as pd
-from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, f1_score, recall_score
-from sklearn.linear_model import LogisticRegression
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, f1_score, recall_score
 
 #Import dataset
 df = pd.read_csv('fraud.csv')
+
 #Remove columns which are not required
 df1 = df.drop(columns = ['isFlaggedFraud','type', 'nameOrig', 'nameDest'])
+
+#Assign columns to variables
 x = df1.iloc[:,0:6].values
 y = df1.iloc[:, 6].values
 
@@ -19,7 +22,7 @@ y = df1.iloc[:, 6].values
 le = LabelEncoder()
 enc = OneHotEncoder()
 
-#Make an array t and apply onehotencoder on it
+#Create an array t (since payment type is categorical, we need to use onehotencoding) and apply onehotencoder on it
 t = df.iloc[:, 1].values
 t = le.fit_transform(t)
 t= t.reshape(-1,1)
